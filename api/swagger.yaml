@@ -1,0 +1,494 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample Petstore server.  You can find \nout more about Swagger\
+    \ at \n[http://swagger.io](http://swagger.io) or on \n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n"
+  version: "1.0.0"
+  title: "BigFUT"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "renanzulian@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/nailuz/ProjetoIntegradorAPI/1.0.0"
+tags:
+- name: "jogadores"
+  description: "Tudo sobre os jogadores"
+- name: "times"
+  description: "Tudo sobre os times"
+- name: "competicoes"
+  description: "Tudo sobre as competicoes e jogos"
+schemes:
+- "https"
+- "http"
+paths:
+  /jogadores:
+    get:
+      tags:
+      - "jogadores"
+      summary: "Busca dados de todos os jogadores"
+      operationId: "buscarJogadores"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Sucesso na operação"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Jogadores"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Jogadores"
+    post:
+      tags:
+      - "jogadores"
+      summary: "Incluir novo jogador"
+      operationId: "adicionarJogador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para cadastro"
+        required: true
+        schema:
+          $ref: "#/definitions/Jogadores"
+      responses:
+        201:
+          description: "Jogador Incluído"
+        400:
+          description: "Esta faltando informações sobre o jogador"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Jogadores"
+  /jogadores/{id_jogador}:
+    get:
+      tags:
+      - "jogadores"
+      summary: "Busca os dados de um jogador pelo seu ID."
+      operationId: "buscaJogador"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_jogador"
+        in: "path"
+        description: "Id do jogador que desejas buscar"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Sucesso na operação"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Jogadores"
+        400:
+          description: "Invalid status value"
+      x-swagger-router-controller: "Jogadores"
+    delete:
+      tags:
+      - "jogadores"
+      summary: "Aposenta um determinado jogadores"
+      operationId: "aposentaJogador"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_jogador"
+        in: "path"
+        description: "Id do jogador que deseja deletar"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Jogadores"
+    patch:
+      tags:
+      - "jogadores"
+      summary: "Atualiza dados dos jogadores"
+      operationId: "atualizaJogador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_jogador"
+        in: "path"
+        description: "Id do jogador que deseja atualizar"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para atualizar"
+        required: true
+        schema:
+          $ref: "#/definitions/Jogadores"
+      responses:
+        200:
+          description: "Sucesso na operação"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Jogadores"
+  /times:
+    get:
+      tags:
+      - "times"
+      summary: "Busca dados de todos os times"
+      operationId: "buscarTimes"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Times"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+    post:
+      tags:
+      - "times"
+      summary: "Incluir novo time"
+      operationId: "adicionarTime"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para cadastro"
+        required: true
+        schema:
+          $ref: "#/definitions/Times"
+      responses:
+        201:
+          description: "Time Incluído"
+        400:
+          description: "Esta faltando informações sobre o time"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+  /times/{id_time}:
+    get:
+      tags:
+      - "times"
+      summary: "Buscar dados de um time pelo id"
+      operationId: "buscarTime"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_time"
+        in: "path"
+        description: "Id do time que desejas buscar"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Times"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+    delete:
+      tags:
+      - "times"
+      summary: "Deleta um time"
+      operationId: "deletarTime"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_time"
+        in: "path"
+        description: "Id do time que deseja deletar"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+    patch:
+      tags:
+      - "times"
+      summary: "Atualizar informações de um time"
+      operationId: "atualizarTime"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_time"
+        in: "path"
+        description: "Id do time que deseja atualizar"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para atualizar"
+        required: true
+        schema:
+          $ref: "#/definitions/Times"
+      responses:
+        200:
+          description: "Sucesso na operação"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+  /times/{id_time}/comprar:
+    post:
+      tags:
+      - "times"
+      summary: "Comprar um novo jogador"
+      operationId: "comprarJogador"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_time"
+        in: "path"
+        description: "Id do time que ira realizar a compra"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Informe o id e o preço do jogador a ser comprado"
+        required: true
+        schema:
+          $ref: "#/definitions/Times"
+      responses:
+        200:
+          description: "Sucesso na operação"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Times"
+  /competicoes:
+    get:
+      tags:
+      - "competicoes"
+      summary: "Traz um resumo do campeonato"
+      operationId: "buscarCompeticao"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Competicoes"
+    post:
+      tags:
+      - "competicoes"
+      summary: "Inicia uma nova competição"
+      operationId: "iniciarCompeticao"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para iniciar a competição"
+        required: true
+        schema:
+          $ref: "#/definitions/Competicoes"
+      responses:
+        201:
+          description: "Competicao gerada"
+        400:
+          description: "Esta faltando informações sobre a competicao"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Competicoes"
+  /competicoes/jogos/{id_jogo}:
+    get:
+      tags:
+      - "competicoes"
+      summary: "Buscar dados de um jogo"
+      operationId: "buscarJogo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_jogo"
+        in: "path"
+        description: "Id do jogo que desejas buscar"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Competicoes"
+    post:
+      tags:
+      - "competicoes"
+      summary: "Realizar um jogo"
+      operationId: "realizarJogo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id_jogo"
+        in: "path"
+        description: "Id do jogo"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Informe os dados para iniciar o jogo"
+        required: true
+        schema:
+          $ref: "#/definitions/Jogos"
+      responses:
+        200:
+          description: "Sucesso na operação"
+        500:
+          description: "Problemas de conexão com o banco"
+      x-swagger-router-controller: "Competicoes"
+definitions:
+  Jogadores:
+    type: "object"
+    properties:
+      id_jogador:
+        type: "integer"
+        format: "int64"
+      id_time:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      nascimento:
+        type: "string"
+        format: "date-time"
+      posicao:
+        type: "string"
+        description: "As posições são goleiro, defensor, meio campista e atacante."
+        enum:
+        - "G"
+        - "D"
+        - "M"
+        - "A"
+      valor:
+        type: "integer"
+        format: "int64"
+      finalizacao:
+        type: "integer"
+        format: "int64"
+      cabeceio:
+        type: "integer"
+        format: "int64"
+      passe:
+        type: "integer"
+        format: "int64"
+      cruzamento:
+        type: "integer"
+        format: "int64"
+      marcacao:
+        type: "integer"
+        format: "int64"
+      fisico:
+        type: "integer"
+        format: "int64"
+    example:
+      cabeceio: 5
+      marcacao: 9
+      id_time: 6
+      nascimento: "2000-01-23T04:56:07.000+00:00"
+      cruzamento: 7
+      id_jogador: 0
+      posicao: "G"
+      valor: 1
+      nome: "nome"
+      passe: 2
+      finalizacao: 5
+      fisico: 3
+  Times:
+    type: "object"
+    properties:
+      id_times:
+        type: "integer"
+        format: "int64"
+      id_competicao:
+        type: "integer"
+        format: "int64"
+      saldo:
+        type: "integer"
+        format: "int64"
+      estado:
+        type: "string"
+      cores:
+        type: "string"
+      nome:
+        type: "string"
+    example:
+      id_competicao: 6
+      estado: "estado"
+      cores: "cores"
+      id_times: 0
+      nome: "nome"
+      saldo: 1
+  Competicoes:
+    type: "object"
+    properties:
+      id_competicao:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+    example:
+      id_competicao: 0
+      nome: "nome"
+  Jogos:
+    type: "object"
+    properties:
+      id_jogo:
+        type: "integer"
+        format: "int64"
+      id_competicao:
+        type: "integer"
+        format: "int64"
+      id_time_casa:
+        type: "integer"
+        format: "int64"
+      id_time_visitante:
+        type: "integer"
+        format: "int64"
+      gols_casa:
+        type: "integer"
+        format: "int64"
+      gols_visitante:
+        type: "integer"
+        format: "int64"
+      publico:
+        type: "integer"
+        format: "int64"
+    example:
+      id_competicao: 6
+      id_time_casa: 1
+      gols_visitante: 2
+      id_time_visitante: 5
+      id_jogo: 0
+      gols_casa: 5
+      publico: 7
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
